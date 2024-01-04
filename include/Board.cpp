@@ -140,7 +140,7 @@ bool Board::CanPieceMove(int (&pieceMatrix)[3][3],int &startingRow,int &starting
     sColumn=newStartingColumn;
     //check if sRow+2 equals to gameBoard row size and third column of piece matrix is full of zero and update gameBoard accordingly
     if( sRow+2 == (getRowSize()) && (pieceMatrix[2][0]==0 && pieceMatrix[2][1]==0 && pieceMatrix[2][2]==0) && canItMove){
-        canItMove=true;    
+        canItMove=true;
     }else if(sRow+2 == (getRowSize()-1) && (pieceMatrix[2][0]==1 || pieceMatrix[2][1]==1 || pieceMatrix[2][2]==1) && canItMove){
         canItMove=true;
     }else if(sRow+2 > (getRowSize()-1)){
@@ -290,7 +290,7 @@ void Board::holdPiece( sf::RenderWindow& window,sf::RectangleShape& cell, int ce
                 holdedPiece[i][j]=currentPiece[i][j];
             }
         }
-        //chose random piece 
+        //chose random piece
         int (&newPiece3)[3][3]=piece.chooseAPiece(currentPieceIndex,tempPieceIndex);
         for(int i=0;i<3;i++){
             for(int j=0;j<3;j++){
@@ -563,9 +563,14 @@ std::pair<int, int> Board::findAPortalPlace(){
 
 //user ınput handling
 //when game over write user name and its score to the file
+//************************************************************************************************************************
+//--------------------csvFilePath
+std::string scoreBoardDataCSVFile="../../scoreBoardData/userScoreBoardData.csv";
+//--------------------csvFilePath
+//************************************************************************************************************************
 void Board::writeUserToFile(std::string userName, int score){
     if(!findAndUpdateUser(userName,score)){
-        std::ofstream csvFile("../../scoreBoardData/userScoreBoardData.csv", std::ios::app);
+        std::ofstream csvFile(scoreBoardDataCSVFile, std::ios::app);
         if (!csvFile.is_open()) {
             std::cerr << "Error opening the file!" << std::endl;
         }
@@ -585,7 +590,7 @@ bool Board::findAndUpdateUser(std::string playerName, int score){
         int score;
     };
     //open the file
-    std::ifstream inputFile("../../scoreBoardData/userScoreBoardData.csv");
+    std::ifstream inputFile(scoreBoardDataCSVFile);
 
     // Check if the file is opened successfully
     if (!inputFile.is_open()) {
@@ -593,7 +598,7 @@ bool Board::findAndUpdateUser(std::string playerName, int score){
     }
 
     // Read data from the CSV file into a vector
-    Vector<userData> userDataVector;        
+    Vector<userData> userDataVector;
     std::string line;
     while (std::getline(inputFile, line)) {
         std::istringstream iss(line);
@@ -616,7 +621,7 @@ bool Board::findAndUpdateUser(std::string playerName, int score){
     // Close the input file
     inputFile.close();
     // Open the CSV file for writing (overwrite mode)
-    std::ofstream outputFile("../../scoreBoardData/userScoreBoardData.csv");
+    std::ofstream outputFile(scoreBoardDataCSVFile);
     // Check if the file is opened successfully
     if (!outputFile.is_open()) {
         std::cerr << "Error opening the CSV file for writing!" << std::endl;
@@ -629,7 +634,7 @@ bool Board::findAndUpdateUser(std::string playerName, int score){
     outputFile.close();
 
     return isUserFound;
-} 
+}
 
 void Board::sortScoreBoard(){
     struct userData{
@@ -638,7 +643,7 @@ void Board::sortScoreBoard(){
     };
 
     //open the file
-    std::ifstream inputFile("../../scoreBoardData/userScoreBoardData.csv");
+    std::ifstream inputFile(scoreBoardDataCSVFile);
 
     // Check if the file is opened successfully
     if (!inputFile.is_open()) {
@@ -682,7 +687,7 @@ void Board::sortScoreBoard(){
     // Close the input file
     inputFile.close();
     // Open the CSV file for writing (overwrite mode)
-    std::ofstream outputFile("../../scoreBoardData/userScoreBoardData.csv");
+    std::ofstream outputFile(scoreBoardDataCSVFile);
     // Check if the file is opened successfully
     if (!outputFile.is_open()) {
         std::cerr << "Error opening the CSV file for writing!" << std::endl;
@@ -699,7 +704,7 @@ void Board::sortScoreBoard(){
 
 
 void Board::printScoreBoard(sf::Font& font,  int cellSize, sf::RenderWindow& window){
-    std::ifstream inputFile("../../scoreBoardData/userScoreBoardData.csv");
+    std::ifstream inputFile(scoreBoardDataCSVFile);
 
     // Check if the file is opened successfully
     if (!inputFile.is_open()) {
@@ -723,7 +728,7 @@ void Board::printScoreBoard(sf::Font& font,  int cellSize, sf::RenderWindow& win
         if (std::getline(iss, userName, ';') && (iss >> score)) {
             userNameLength=userName.length();
             spaceBetweenNameAndScore.append(30-userNameLength,' ');
-            userData= std::to_string(index) + ".  " + userName + spaceBetweenNameAndScore + std::to_string(score);     
+            userData= std::to_string(index) + ".  " + userName + spaceBetweenNameAndScore + std::to_string(score);
             sf::Text textUserData(userData,font,40);
             textUserData.setFillColor(getOutlineColor());
             textUserData.setPosition({ static_cast<float>(cellSize*2), static_cast<float>(cellSize*padding) });
@@ -762,3 +767,4 @@ void Board::playSound(std::string path){
 void Board::restartBackgroundMusic(sf::Music& backgroundMusic){
     backgroundMusic.play();
 }
+

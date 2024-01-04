@@ -32,11 +32,16 @@ int newPieceplaceRow,newPiecePlaceColumn;
 //soundPaths
 const std::string selectionSoundPath="../../sounds/selectionSound.wav";
 const std::string gameOverSoundPath="../../sounds/gameOverSound.wav";
-const std::string dropSoundPath="../../sounds/dropSound.wav"; 
+const std::string dropSoundPath="../../sounds/dropSound.wav";
 const std::string movePieceSoundPath="../../sounds/movePieceSound.wav";
 const std::string clearRowSoundPath="../../sounds/clearRowSound.wav";
 const std::string rotationSoundPath="../../sounds/rotationSound.wav";
 const std::string tetrisBackgroundMusicPath="../../sounds/tetrisBackgroundMusic.mp3";
+//fontPath
+std::filesystem::path fontPath("../../fonts/Pixellettersfull-BnJ5.ttf");
+//imagesPath
+const std::string speakerOnPath="../../images/speakerOn.jpg";
+const std::string speakerOffPath="../../images/speakerOff.jpg";
 
 
 
@@ -96,12 +101,11 @@ void Game::startGame(){
     bool isHoldedAreaEmpty=true;
     int holdedPiece[3][3]={{0,0,0},{0,0,0},{0,0,0}};
     //**************************************************************************************************************
-    //create a font 
+    //create a font
     sf::Font font;
-    std::filesystem::path filePath("../../fonts/Pixellettersfull-BnJ5.ttf");
-    if (!font.loadFromFile(filePath))
+    if (!font.loadFromFile(fontPath))
     {
-        std::cerr << "Error: Failed to load font from file '" << filePath << "'" << std::endl;
+        std::cerr << "Error: Failed to load font from file '" << fontPath << "'" << std::endl;
     }
     //************************************************************************************************************
     // determine cell size, padding and color
@@ -130,12 +134,12 @@ void Game::startGame(){
     //************************************************************************
     //upload Sound onand off images
     sf::Texture soundOn;
-    if (!soundOn.loadFromFile("../../images/speakerOn.jpg")) {
+    if (!soundOn.loadFromFile(speakerOnPath)) {
         // Handle error if the image file can't be loaded
         std::cout<<"couldnt load speaker on image"<<std::endl;
     }
     sf::Texture soundOff;
-    if (!soundOff.loadFromFile("../../images/speakerOff.jpg")) {
+    if (!soundOff.loadFromFile(speakerOffPath)) {
         // Handle error if the image file can't be loaded
         std::cout<<"couldnt load speaker off image"<<std::endl;
     }
@@ -203,7 +207,7 @@ void Game::startGame(){
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
-            if (event.type == sf::Event::KeyPressed) 
+            if (event.type == sf::Event::KeyPressed)
             {
                 // Check which key is pressed
                 // left key is pressed: move piece
@@ -214,7 +218,7 @@ void Game::startGame(){
                         movePieceSound.play();
                     gameBoard.movePieceToLeft(currentPiece, startingRow,startingColumn);
                 }
-                // right key is pressed: move piece    
+                // right key is pressed: move piece
                 if (event.key.code == sf::Keyboard::Right){
                     // std::thread musicThread(&Board::playSound, &gameBoard, movePieceSoundPath);
                     // musicThread.detach();
@@ -222,16 +226,16 @@ void Game::startGame(){
                         movePieceSound.play();
                     gameBoard.movePieceToRight(currentPiece, startingRow,startingColumn);
                 }
-                // A key is pressed: rotate counterclockwise    
+                // A key is pressed: rotate counterclockwise
                 if (event.key.code == sf::Keyboard::A && !isUserNameTextAreaClicked){
                     // std::thread musicThread(&Board::playSound, &gameBoard, rotationSoundPath);
                     // musicThread.detach();
                     if(!shutBackgroundMusic)
                         rotationSound.play();
-                    gameBoard.rotateCounterclockwise(currentPiece, startingRow,startingColumn, piece, piece.allowedRotationNumber, piece.rotationCounter, playerCanRotate);   
+                    gameBoard.rotateCounterclockwise(currentPiece, startingRow,startingColumn, piece, piece.allowedRotationNumber, piece.rotationCounter, playerCanRotate);
 
                 }
-                // D key is pressed: rotate clockwise 
+                // D key is pressed: rotate clockwise
                 if (event.key.code == sf::Keyboard::D && !isUserNameTextAreaClicked){
                     // std::thread musicThread(&Board::playSound, &gameBoard, rotationSoundPath);
                     // musicThread.detach();
@@ -244,7 +248,7 @@ void Game::startGame(){
                     // musicThread.detach();
                     if(!shutBackgroundMusic)
                         movePieceSound.play();
-                    gameBoard.movePieceToDownward(currentPiece, startingRow,startingColumn);  
+                    gameBoard.movePieceToDownward(currentPiece, startingRow,startingColumn);
                 }
                 if (event.key.code == sf::Keyboard::Space && !isUserNameTextAreaClicked){
                     // std::thread musicThread(&Board::playSound, &gameBoard, dropSoundPath);
@@ -252,7 +256,7 @@ void Game::startGame(){
                     if(!shutBackgroundMusic)
                         dropSound.play();
                     for(int i=0;i<20;i++)
-                        gameBoard.movePieceToDownward(currentPiece, startingRow,startingColumn);      
+                        gameBoard.movePieceToDownward(currentPiece, startingRow,startingColumn);
                 }
                 if (event.key.code == sf::Keyboard::S && !isUserNameTextAreaClicked){
                     // std::thread musicThread(&Board::playSound, &gameBoard, selectionSoundPath);
@@ -305,7 +309,7 @@ void Game::startGame(){
                         //QUİT FROM GAME
                         window.close();
                     }
-                    // Check where mouse is clicked for theme selection menu 
+                    // Check where mouse is clicked for theme selection menu
                     if(event.mouseButton.x>=((windowWidth/2)-50) && event.mouseButton.x<=((windowWidth/2)+50) && event.mouseButton.y>=cellSize*4 && event.mouseButton.y<=cellSize*6 && isPaused && isThemeSelectionSelected){
                         // std::thread musicThread(&Board::playSound, &gameBoard, selectionSoundPath);
                         // musicThread.detach();
@@ -597,7 +601,7 @@ void Game::startGame(){
                             selectionSound.play();
                         gameBoard.adjustCustomPiece(piece.exclusiveShape3, 2, 2,customPieceCell,window,cellSize*12,cellSize*15,piece,12);
                     }
-                    // Check where mouse is clicked for game over menu 
+                    // Check where mouse is clicked for game over menu
                     if(event.mouseButton.x>=((windowWidth/2)-150) && event.mouseButton.x<=((windowWidth/2)+150) && event.mouseButton.y>=cellSize*10 && event.mouseButton.y<=cellSize*12 && isPaused && isGameOver){
                         // std::thread musicThread(&Board::playSound, &gameBoard, selectionSoundPath);
                         // musicThread.detach();
@@ -605,7 +609,7 @@ void Game::startGame(){
                             selectionSound.play();
                         isGameOver=false;
                     }
-                    // Check where mouse is clicked for score board menu 
+                    // Check where mouse is clicked for score board menu
                     if(event.mouseButton.x>=(cellSize) && event.mouseButton.x<=(cellSize*3) && event.mouseButton.y>=cellSize*2 && event.mouseButton.y<=cellSize*4 && isPaused && isScoreBoardSelected){
                         // std::thread musicThread(&Board::playSound, &gameBoard, selectionSoundPath);
                         // musicThread.detach();
@@ -702,7 +706,7 @@ void Game::startGame(){
                 cell.setPosition({cellSize*18, cellSize*11});
                 window.draw(cell);
             }else if(isNewGameSelected)
-            { 
+            {
                 //show New game part if selected
                 sf::Text textEnterName("Enter Your Name",font,40);
                 textEnterName.setFillColor(gameBoard.getOutlineColor());
@@ -779,7 +783,7 @@ void Game::startGame(){
                         if(piece.exclusiveShape1[i][j]==1)
                             customPieceCell.setFillColor(gameBoard.getPieceColor());
                         else
-                            customPieceCell.setFillColor(sf::Color::Transparent);    
+                            customPieceCell.setFillColor(sf::Color::Transparent);
                         customPieceCell.setPosition({(cellSize*5+cellSize*j),(cellSize*13+cellSize*i)});
                         window.draw(customPieceCell);
                     }
@@ -844,9 +848,9 @@ void Game::startGame(){
                 window.draw(textScoreBoardGoBack);
                 //print user score datas
                 gameBoard.printScoreBoard(font, cellSize, window);
-            }else 
+            }else
             {
-                //show pause screen 
+                //show pause screen
                 //write header
                 sf::Text header("TETRIS",font,60);
                 header.setFillColor(gameBoard.getOutlineColor());
@@ -858,7 +862,7 @@ void Game::startGame(){
                     textResume.setFillColor(gameBoard.getOutlineColor());
                     textResume.setPosition({static_cast<float>(windowWidth/2)-60, static_cast<float>(cellSize*5) });
                     window.draw(textResume);
-                } 
+                }
                 //write start game option
                 sf::Text textNewGame("New Game",font,40);
                 textNewGame.setFillColor(gameBoard.getOutlineColor());
@@ -879,7 +883,7 @@ void Game::startGame(){
                 textQuit.setFillColor(gameBoard.getOutlineColor());
                 textQuit.setPosition({static_cast<float>(windowWidth/2)-50, static_cast<float>(cellSize*13) });
                 window.draw(textQuit);
-                //write Developer 
+                //write Developer
                 sf::Text textDeveloper("Developer",font,40);
                 textDeveloper.setFillColor(gameBoard.getOutlineColor());
                 textDeveloper.setPosition({static_cast<float>(windowWidth/2)-70, static_cast<float>(windowHight-150) });
@@ -922,7 +926,7 @@ void Game::startGame(){
                 }
             
                 //reset variables
-                startingRow=0; 
+                startingRow=0;
                 startingColumn=(gameBoard.gameBoardMatrix.getColumnSize()/2)-1;
                 piece.rotationCounter=0;
                 playerCanRotate=true;
@@ -955,8 +959,8 @@ void Game::startGame(){
                             gameBoard.gameBoardMatrix(i,j)=0;
                     }
                 }
-                isPlayerInteractWithPortal=false; 
-                startingRow=0; 
+                isPlayerInteractWithPortal=false;
+                startingRow=0;
                 startingColumn=(gameBoard.gameBoardMatrix.getColumnSize()/2)-1;
 
                 if( (score>=portalScoreLimit) && (createRandomNumbers(0,10)<3) ){
@@ -970,7 +974,7 @@ void Game::startGame(){
 
 
             }else{
-                //control if portal is called 
+                //control if portal is called
                  //************************************************************************************
                 if(isPortalCalled){
                     //control portal and piece whether they interact
@@ -1064,9 +1068,9 @@ void Game::startGame(){
                         if(gameBoard.gameBoardMatrix(row,column)==0)
                             cell.setFillColor(sf::Color::Transparent); // Set fill color to transparent
                         if(gameBoard.gameBoardMatrix(row,column)==1)
-                            cell.setFillColor(gameBoard.getPieceColor()); // Set fill color to transparent    
+                            cell.setFillColor(gameBoard.getPieceColor()); // Set fill color to transparent
                         if(gameBoard.gameBoardMatrix(row,column)==2)
-                            cell.setFillColor(sf::Color::Black); // Set fill color to transparent    
+                            cell.setFillColor(sf::Color::Black); // Set fill color to transparent
                         window.draw(cell);
                     }
                 }
@@ -1103,3 +1107,4 @@ void Game::startGame(){
 
 
 }
+
