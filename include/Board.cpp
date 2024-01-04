@@ -747,23 +747,6 @@ void Board::printScoreBoard(sf::Font& font,  int cellSize, sf::RenderWindow& win
 
 
 
-
-//sound functions
-void Board::playSound(std::string path){
-    sf::Music music;
-    // Load an audio file
-    std::filesystem::path filePath(path);
-    if (!music.openFromFile(filePath)) {
-        // Handle error if the file couldn't be loaded
-    }
-    // Play the music
-    music.play();
-    // Wait until the music finishes playing
-    while (music.getStatus() == sf::Music::Playing) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-    }
-}
-
 void Board::restartBackgroundMusic(sf::Music& backgroundMusic){
     backgroundMusic.play();
 }
