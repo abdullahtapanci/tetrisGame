@@ -257,7 +257,7 @@ void Board::drawNextPiece( sf::RenderWindow& window,sf::RectangleShape& cell, in
     sf::RectangleShape piecePreviewArea(sf::Vector2f(cellSize*5, cellSize*5));
     piecePreviewArea.setOutlineColor(getOutlineColor());                                                         // Set outline color
     piecePreviewArea.setOutlineThickness(2);                                                                    // Set outline thickness
-    piecePreviewArea.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) , cellSize*(getRowSize()-5)+20 ));
+    piecePreviewArea.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) , cellSize*(20-5)+20 ));
     piecePreviewArea.setFillColor(sf::Color::Transparent);
     window.draw(piecePreviewArea);
     //draw next piece into piece preview area
@@ -265,7 +265,7 @@ void Board::drawNextPiece( sf::RenderWindow& window,sf::RectangleShape& cell, in
         for(int column=0;column<3;column++){
             if(nextPiece[row][column]==1){
                 cell.setFillColor(getPieceColor());
-                cell.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) + cellSize*column + cellSize  ,  cellSize*(getRowSize()-5) + 20 + cellSize*row + cellSize ));
+                cell.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) + cellSize*column + cellSize  ,  cellSize*(20-5) + 20 + cellSize*row + cellSize ));
                 window.draw(cell);
             }
         }
@@ -273,7 +273,7 @@ void Board::drawNextPiece( sf::RenderWindow& window,sf::RectangleShape& cell, in
     //write piece preview beneath area
     sf::Text piecePreviewText("Piece Preview",font,30);
     piecePreviewText.setFillColor(getOutlineColor());
-    piecePreviewText.setPosition({static_cast<float>(cellSize*(getColumnSize()+2) ) , static_cast<float>(cellSize*(getRowSize()-1) + 10 + cellSize)});
+    piecePreviewText.setPosition({static_cast<float>(cellSize*(getColumnSize()+2) ) , static_cast<float>(cellSize*(20-1) + 10 + cellSize)});
     window.draw(piecePreviewText);
 }
 
@@ -333,7 +333,7 @@ void Board::drawHoldPiece( sf::RenderWindow& window,sf::RectangleShape& cell, in
     sf::RectangleShape holdPieceArea(sf::Vector2f(cellSize*5, cellSize*5));
     holdPieceArea.setOutlineColor(getOutlineColor());                                                         // Set outline color
     holdPieceArea.setOutlineThickness(2);                                                                    // Set outline thickness
-    holdPieceArea.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) , cellSize*(getRowSize()-11)+20 ));
+    holdPieceArea.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) , cellSize*(20-11)+20 ));
     holdPieceArea.setFillColor(sf::Color::Transparent);
     window.draw(holdPieceArea);
     //draw holded piece into area
@@ -341,7 +341,7 @@ void Board::drawHoldPiece( sf::RenderWindow& window,sf::RectangleShape& cell, in
         for(int column=0;column<3;column++){
             if(holdedPiece[row][column]==1){
                 cell.setFillColor(getPieceColor());
-                cell.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) + cellSize*column + cellSize  ,  cellSize*(getRowSize()-11) + 20 + cellSize*row + cellSize ));
+                cell.setPosition(sf::Vector2f( cellSize*(getColumnSize()+2) + cellSize*column + cellSize  ,  cellSize*(20-11) + 20 + cellSize*row + cellSize ));
                 window.draw(cell);
             }
         }
@@ -349,7 +349,7 @@ void Board::drawHoldPiece( sf::RenderWindow& window,sf::RectangleShape& cell, in
     //write holde piece beneath holde piece area
     sf::Text holdPreviewText("Hold Preview",font,30);
     holdPreviewText.setFillColor(getOutlineColor());
-    holdPreviewText.setPosition({static_cast<float>(cellSize*(getColumnSize()+2)), static_cast<float>(cellSize*(getRowSize()-6)+10) });
+    holdPreviewText.setPosition({static_cast<float>(cellSize*(getColumnSize()+2)), static_cast<float>(cellSize*(20-6)+10) });
     window.draw(holdPreviewText);
 }
 
