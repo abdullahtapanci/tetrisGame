@@ -745,6 +745,40 @@ void Board::printScoreBoard(sf::Font& font,  int cellSize, sf::RenderWindow& win
 }
 
 
+//************************************************************************************
+//shrinking board functions
+bool Board::controlIfEnoughRowAreEmpty(){
+    bool isEnoughRowsAreEmpty=true;
+    for(int i=0;i<=10;i++){
+        for(int j=0;j<=(getColumnSize()-1);j++){
+            if(gameBoardMatrix(i,j)==1){
+                isEnoughRowsAreEmpty=false;
+                break;
+            }
+        }
+        if(!isEnoughRowsAreEmpty)
+            break;
+    }
+    return isEnoughRowsAreEmpty;
+}
+
+void Board::movePiecesToUpShrinkingBoard(){
+    for(int i=3;i<=(getRowSize()-1);i++){
+        for(int j=0;j<=(getColumnSize()-1);j++){
+            gameBoardMatrix(i-3,j)=gameBoardMatrix(i,j);
+        }
+    }
+}
+
+void Board::movePiecesToDownShrinkingBoard(){
+    for(int i=(getRowSize()-4);i>=0;i--){
+        for(int j=0;j<=(getColumnSize()-1);j++){
+            gameBoardMatrix(i+3,j)=gameBoardMatrix(i,j);
+        }
+    }
+}
+
+
 
 
 void Board::restartBackgroundMusic(sf::Music& backgroundMusic){
