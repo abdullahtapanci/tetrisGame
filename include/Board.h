@@ -77,7 +77,7 @@ public:
     void increaseScore(int& score);
 
     //control if a row of gameboard matrix is full of 1
-    bool controlRowOfGameBoardMatrix( int& score, int scoreRise);
+    bool controlRowOfGameBoardMatrix( int& score, int scoreRise , int& lineClearedCounter);
 
 
     //menu functions
