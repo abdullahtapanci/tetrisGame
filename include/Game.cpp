@@ -70,6 +70,14 @@ sf::Time blackoutDuration = sf::seconds(blackoutDurationNumber);
 int portalScoreLimit;
 
 
+//**********************************************************************
+//set timer for shrinking board
+sf::Clock clockForShrinkingBoard;
+sf::Time timeElapsedForShrinkingBoard;
+sf::Time durationShrinkingBoard=sf::seconds(5.0f);
+bool isShrinkingBoardActive=false;
+bool isTimerStartedForShrinkingBoard=false;
+
 
 
 //selection indicator for easy, medium and hard choices
@@ -946,11 +954,32 @@ void Game::startGame(){
                 }
                 //********* if score reaches the blackoutLimit set a timer if a spesific condition is met **********
                 if(score>=blackoutScoreLimit){
-                    if(createRandomNumbers(0,20)<5){
+                    if(createRandomNumbers(0,20)<2){
                         blackoutTimer.restart();
                         blackoutTimerStarted=true;
                     }
                 }
+                //************************************************************************************
+                //shrinking board algorithm
+                if((gameBoard.controlIfEnoughRowAreEmpty()) && (score>=blackoutScoreLimit) && (!isShrinkingBoardActive)){
+                    if(createRandomNumbers(0,20)<5){
+                        clockForShrinkingBoard.restart();
+                        isTimerStartedForShrinkingBoard=true;
+                        isShrinkingBoardActive=true;
+                    }
+                }
+                if(isTimerStartedForShrinkingBoard){
+                    isTimerStartedForShrinkingBoard=false;
+                    gameBoard.movePiecesToUpShrinkingBoard();
+                    gameBoard.setRowSize(gameBoard.getRowSize()-3);
+                }
+                timeElapsedForShrinkingBoard=clockForShrinkingBoard.getElapsedTime();
+                if(timeElapsedForShrinkingBoard>=durationShrinkingBoard && isShrinkingBoardActive){
+                    gameBoard.setRowSize(gameBoard.getRowSize()+3);
+                    gameBoard.movePiecesToDownShrinkingBoard();
+                    isShrinkingBoardActive=false;
+                }
+                
                 //************************************************************************************
                 //delete portal that player didnt interact with it
                 for(int i=0;i<=(gameBoard.getRowSize()-1);i++){
