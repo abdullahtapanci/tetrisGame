@@ -375,7 +375,7 @@ void Board::increaseScore(int& score){
 
 
 
-bool Board::controlRowOfGameBoardMatrix( int& score, int scoreRise){
+bool Board::controlRowOfGameBoardMatrix( int& score, int scoreRise, int& lineClearedCounter){
     //create a boolean variable to hold value of wheter it is full of 1
     bool isThereAtLeastOneRowFullOfOne=false;
     bool isRowFullOfOne;
@@ -390,6 +390,7 @@ bool Board::controlRowOfGameBoardMatrix( int& score, int scoreRise){
         }
         //if row is full of one, make it all zero and carry upper shapes down
         if(isRowFullOfOne==true){
+            lineClearedCounter++;
             isThereAtLeastOneRowFullOfOne=true;
             //make the row full of zero
             for(int i=0;i<getColumnSize();i++){
