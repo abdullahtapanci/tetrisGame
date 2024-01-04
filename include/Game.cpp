@@ -38,7 +38,7 @@ const std::string clearRowSoundPath="../../sounds/clearRowSound.wav";
 const std::string rotationSoundPath="../../sounds/rotationSound.wav";
 const std::string tetrisBackgroundMusicPath="../../sounds/tetrisBackgroundMusic.mp3";
 //fontPath
-std::filesystem::path fontPath("../../fonts/Pixellettersfull-BnJ5.ttf");
+const std::string fontPath="../../fonts/Pixellettersfull-BnJ5.ttf";
 //imagesPath
 const std::string speakerOnPath="../../images/speakerOn.jpg";
 const std::string speakerOffPath="../../images/speakerOff.jpg";
