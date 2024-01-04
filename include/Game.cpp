@@ -86,6 +86,11 @@ bool isMediumSelected=false;
 bool isHardSelected=false;
 
 
+//line cleared Counter
+int lineClearedCounter=0;
+
+
+
 
 
 
@@ -925,7 +930,7 @@ void Game::startGame(){
                     gameBoard.writeUserToFile(userNameInput,score);
                 }
                 gameBoard.movePiece(currentPiece,startingRow,startingColumn,isMoving,startingRow+1,startingColumn);
-                bool isRowFullOfOne=gameBoard.controlRowOfGameBoardMatrix(score,scoreRise);
+                bool isRowFullOfOne=gameBoard.controlRowOfGameBoardMatrix(score,scoreRise,lineClearedCounter);
                 if(isRowFullOfOne){
                     // std::thread musicThread(&Board::playSound, &gameBoard, clearRowSoundPath);
                     // musicThread.detach();
@@ -937,6 +942,7 @@ void Game::startGame(){
                 startingRow=0;
                 startingColumn=(gameBoard.gameBoardMatrix.getColumnSize()/2)-1;
                 piece.rotationCounter=0;
+                lineClearedCounter=0;
                 playerCanRotate=true;
                 isPlayerInteractWithPortal=false;
                 //copy nextPiece to current piece
@@ -1118,7 +1124,19 @@ void Game::startGame(){
                 gameBoard.drawHoldPiece(window, cell, cellSize, holdedPiece, font);
                 //draw score
                 gameBoard.drawScore(score, window, cellSize, font);
+                //write line cleared
+                sf::Text textLineCleared("Line Cleared",font,40);
+                textLineCleared.setFillColor(gameBoard.getOutlineColor());
+                textLineCleared.setPosition({static_cast<float>(cellSize*(gameBoard.getColumnSize()+2)), static_cast<float>(cellSize*4) });
+                window.draw(textLineCleared);
+                //write line cleared number
+                sf::Text textLineClearedNumber(std::to_string(lineClearedCounter),font,40);
+                textLineClearedNumber.setFillColor(gameBoard.getOutlineColor());
+                textLineClearedNumber.setPosition({static_cast<float>(cellSize*(gameBoard.getColumnSize()+2)), static_cast<float>(cellSize*5) });
+                window.draw(textLineClearedNumber);
+
                 }
+                
             }
 
         //draw soundon and of button
