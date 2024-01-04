@@ -928,6 +928,7 @@ void Game::startGame(){
                     isGameStarted=false;
                     isGameOver=true;
                     gameBoard.writeUserToFile(userNameInput,score);
+                    lineClearedCounter=0;
                 }
                 gameBoard.movePiece(currentPiece,startingRow,startingColumn,isMoving,startingRow+1,startingColumn);
                 bool isRowFullOfOne=gameBoard.controlRowOfGameBoardMatrix(score,scoreRise,lineClearedCounter);
@@ -942,7 +943,6 @@ void Game::startGame(){
                 startingRow=0;
                 startingColumn=(gameBoard.gameBoardMatrix.getColumnSize()/2)-1;
                 piece.rotationCounter=0;
-                lineClearedCounter=0;
                 playerCanRotate=true;
                 isPlayerInteractWithPortal=false;
                 //copy nextPiece to current piece
