@@ -118,12 +118,15 @@ public:
     void printScoreBoard(sf::Font& font,  int cellSize, sf::RenderWindow& window);
     
 
-
+    //************************************************************************************
+    //shrinking board functions
+    bool controlIfEnoughRowAreEmpty();
+    void movePiecesToUpShrinkingBoard();
+    void movePiecesToDownShrinkingBoard();
 
 
 
     //sounds
-    void playSound(std::string path);
     void restartBackgroundMusic(sf::Music& backgroundMusic);
 };
 
