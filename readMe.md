@@ -1,15 +1,15 @@
-#Tetris Game
+# Tetris Game
 
-##Overview
+## Overview
 This is a simple tetris game written in cpp using SFML library.
 
-##Features
+## Features
 - Classic tetris gameplay with extra features like shrinking board, screen blackout etc.
 - User-friendly graphical interface
 - Scoring system basen on cleared lines
 - Basic Theme Manager
 
-##Requirements
+## Requirements
 - C++ compiler (supporting C++17 or later)
 - Cmake 
 
@@ -29,5 +29,5 @@ This is a simple tetris game written in cpp using SFML library.
       - after you installed microsoft visual studio community build project and run code
 That is it. Enjoy tetris game.
 
-##Note:
+## Note:
   - You may adjust paths in code because based on compilers and OS the folder that is tetris.exe in may change. generally it is in build -> bin directory.
